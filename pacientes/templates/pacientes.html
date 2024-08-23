@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block 'head' %}
+    <link rel= "stylesheet" href= "{% static 'pacientes/css/pacientes.css'%}">
+{% endblock %}
+
+{% block 'dashboard' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md card-dashboard">
+                <p class= "text-card">Adicionar Paciente</p>
+            </div>
+
+            <div class="col-md card-dashboard">
+                <p class= "text-card">Atualizar Paciente</p>
+            </div>
+            
+                <div class="adicionar-cliente">
+                    <form action="{% url 'pacientes' %}" method="POST">{% csrf_token %}
+                        <div class="row">
+                            <div class="col-md">
+                                <p>Nome:</p>
+                                <input type="text" class="form-control" placeholder="Primeiro nome" name="first_name" required>
+                            </div>
+                            <div class="col-md">
+                                <p>Sobrenome:</p>
+                                <input type="text" class="form-control" placeholder="Sobrenome" name="last_name" required>
+                            </div>
+                        </div>
+                        <br>
+                        <p>Endereço:</p>
+                        <input type="text" class="form-control" placeholder="Endereço" name="address" required>
+                        <br>
+                        <p>Bairro:</p>
+                        <input type="text" class="form-control" placeholder="Bairro" name="neighborhood" required>
+                        <br>
+                        <p>Telefone:</p>
+                        <input type="text" class="form-control" placeholder="Telefone" name="phone" required>
+                        <br>
+                        <p>Data de Nascimento:</p>
+                        <input type="date" class="form-control" name="birth_date" required>
+                        <br>
+                        <p>Sexo:</p>
+                        <select class="form-control" name="gender" required>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                        </select>
+                        <br>
+                        <p>Data de Entrada:</p>
+                        <input type="date" class="form-control" name="entry_date" required>
+                        <br>
+                        <p>Status:</p>
+                    <select class="form-control" name="status" required>
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                    </select>
+                    <br>
+                        <input type="submit" value="Cadastrar" class="btn-principal">
+                    </form>
+                </div>
+                
+        </div>
+    </div>
+
+{% endblock %}
