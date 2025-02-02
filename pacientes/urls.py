@@ -1,6 +1,6 @@
 from django.urls import path
-from . import views 
+from . import views
 
-urlpatterns = [ 
-    path('', views.pacientes, name = "pacientes")
+urlpatterns = [
+    path('', views.pacientes, name='pacientes'),  # Página inicial do app
 ]

@@ -3,65 +3,137 @@
 {% load static %}
 
 {% block 'head' %}
-    <link rel= "stylesheet" href= "{% static 'pacientes/css/pacientes.css'%}">
+    <link rel="stylesheet" href="{% static 'pacientes/css/pacientes.css' %}">
 {% endblock %}
 
 {% block 'dashboard' %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md card-dashboard">
-                <p class= "text-card">Adicionar Paciente</p>
-            </div>
+<div class="container">
+    <div class="row mb">
+        <div class="col-md-5 card-dashboard">
+            <p class="text-card">Adicionar Paciente</p>
+        </div>
 
-            <div class="col-md card-dashboard">
-                <p class= "text-card">Atualizar Paciente</p>
-            </div>
-            
-                <div class="adicionar-cliente">
-                    <form action="{% url 'pacientes' %}" method="POST">{% csrf_token %}
-                        <div class="row">
-                            <div class="col-md">
-                                <p>Nome:</p>
-                                <input type="text" class="form-control" placeholder="Primeiro nome" name="first_name" required>
-                            </div>
-                            <div class="col-md">
-                                <p>Sobrenome:</p>
-                                <input type="text" class="form-control" placeholder="Sobrenome" name="last_name" required>
-                            </div>
-                        </div>
-                        <br>
-                        <p>Endereço:</p>
-                        <input type="text" class="form-control" placeholder="Endereço" name="address" required>
-                        <br>
+        <div class="col-md-5 card-dashboard">
+            <p class="text-card">Atualizar Paciente</p>
+        </div>
+
+        <div class="adicionar-paciente">
+            <form action="{% url 'pacientes' %}" method="POST">{% csrf_token %}
+                <div class="row mb">
+                    <div class="col-md">
+                        <p>Nome:</p>
+                        <input type="text" class="form-control" placeholder="Primeiro nome" name="nome" required>
+                    </div>
+                    <div class="col-md">
+                        <p>Sobrenome:</p>
+                        <input type="text" class="form-control" placeholder="Sobrenome" name="sobrenome" required>
+                    </div>
+                </div>
+                <br>
+                <p>CPF:</p>
+                <input type="text" class="form-control" placeholder="___.___.___-__" name="cpf">
+                <br>
+                <p>Endereço:</p>
+                <input type="text" class="form-control" placeholder="Endereço" name="endereço" required>
+                <div class="row">
+                    <div class="col-md">
                         <p>Bairro:</p>
-                        <input type="text" class="form-control" placeholder="Bairro" name="neighborhood" required>
-                        <br>
+                        <input type="text" class="form-control" placeholder="Bairro" name="bairro" required>
+                    </div>
+                    <div class="col-md">
                         <p>Telefone:</p>
-                        <input type="text" class="form-control" placeholder="Telefone" name="phone" required>
-                        <br>
+                        <input type="text" class="form-control" placeholder="Telefone" name="telefone" required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md">
                         <p>Data de Nascimento:</p>
-                        <input type="date" class="form-control" name="birth_date" required>
-                        <br>
+                        <input type="date" class="form-control" name="data_nasc" required>
+                    </div>
+                    <div class="col-md">
                         <p>Sexo:</p>
-                        <select class="form-control" name="gender" required>
+                        <select class="form-control" name="sexo" required>
                             <option value="M">Masculino</option>
                             <option value="F">Feminino</option>
                         </select>
-                        <br>
-                        <p>Data de Entrada:</p>
-                        <input type="date" class="form-control" name="entry_date" required>
-                        <br>
-                        <p>Status:</p>
-                    <select class="form-control" name="status" required>
-                        <option value="Ativo">Ativo</option>
-                        <option value="Inativo">Inativo</option>
-                    </select>
-                    <br>
-                        <input type="submit" value="Cadastrar" class="btn-principal">
-                    </form>
+                    </div>
                 </div>
-                
+                <br>
+                <div class="row">
+                    <div class="col-md">
+                        <p>Data de Entrada:</p>
+                        <input type="date" class="form-control" name="data_entrada" required>
+                    </div>
+                    <div class="col-md">
+                        <p>Status:</p>
+                        <select class="form-control" name="status" required>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                            <option value="Manutencao">Manutenção</option>
+                            <option value="Alta">Alta</option>
+                            <option value="Obito">Óbito</option>
+                            <option value="Paleativo">Paleativo</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <!-- Novos campos: Tipo de Cesta -->
+                <div class="row mb">
+                    <div class="col-md">
+                        <p>Tipo de Cesta:</p>
+                        <select name="tipo_cesta" class="form-control" onchange="toggleCestaDetalhes(this)">
+                            <option value="">Selecione...</option>
+                            <option value="basica">Básica</option>
+                            <option value="frutas">Frutas</option>
+                            <option value="legumes">Legumes</option>
+                            <option value="cereais">Cereais</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Detalhes da Cesta -->
+                <div id="detalhes-cesta" style="display: none;">
+                    <div class="row mb">
+                        <div class="col-md">
+                            <p>Opção da Cesta:</p>
+                            <select name="opcao_cesta" class="form-control">
+                                <option value="cesta_alternada">Cesta Alternada</option>
+                                <option value="mensal">Mensal</option>
+                                <option value="tempo_indeterminado">Tempo Indeterminado</option>
+                                <option value="suspensa">Suspensa</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <!-- Tipo de Câncer e Observação -->
+                <div class="row mb">
+                    <div class="col-md">
+                        <p>Tipo de Câncer:</p>
+                        <input type="text" class="form-control" placeholder="Digite o tipo de câncer" name="tipo_cancer" required>
+                    </div>
+                    <div class="col-md">
+                        <p>Observação:</p>
+                        <textarea class="form-control" placeholder="Digite uma observação" name="observacao" rows="3"></textarea>
+                    </div>
+                </div>
+                <br>
+                <input type="submit" value="Cadastrar" class="btn-principal">
+            </form>
         </div>
     </div>
+</div>
+
+<script>
+    function toggleCestaDetalhes(selectElement) {
+        const detalhesDiv = document.getElementById('detalhes-cesta');
+        if (selectElement.value) {
+            detalhesDiv.style.display = 'block';
+        } else {
+            detalhesDiv.style.display = 'none';
+        }
+    }
+</script>
 
 {% endblock %}
