@@ -1,19 +1,25 @@
 from datetime import datetime
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Paciente  # Certifique-se de que está correto
 from validate_docbr import CPF
+import re
+from django.core import serializers
+import json
+from django.shortcuts import render
+
 
 def pacientes(request):
     if request.method == "GET":
-        return render(request, 'pacientes.html', {'data': datetime(day=22, month=3, year=2015, hour=10, microsecond=2)})
+        paciente_list = Paciente.objects.all()
+        return render(request, 'pacientes.html', {'pacientes': paciente_list})
 
     elif request.method == "POST":
         nome = request.POST.get('nome')
         sobrenome = request.POST.get('sobrenome')
         cpf = request.POST.get('cpf')
         endereco = request.POST.get('endereço')
-        bairro = request.POST.get('bairro')
+        bairro = request.POST.get('bairro') 
         telefone = request.POST.get('telefone')
         data_nasc = request.POST.get('data_nasc')
         sexo = request.POST.get('sexo')
@@ -56,3 +62,10 @@ def pacientes(request):
             item.save()
 
         return HttpResponse('Paciente cadastrado com sucesso!')
+    
+def att_paciente(request):
+    id_paciente = request.POST.get('id_paciente')
+    paciente = Paciente.objects.filter(id=id_paciente)
+    paciente_json = json.loads(serializers.serialize('json', paciente))[0]['fileds']
+    print(paciente_json)
+    return JsonResponse(paciente_json)

@@ -9,15 +9,15 @@
 {% block 'dashboard' %}
 <div class="container">
     <div class="row mb">
-        <div class="col-md-5 card-dashboard">
+        <div onclick="exibir_form('1')" class="col-md-5 card-dashboard">
             <p class="text-card">Adicionar Paciente</p>
         </div>
 
-        <div class="col-md-5 card-dashboard">
+        <div onclick="exibir_form('2')" class="col-md-5 card-dashboard">
             <p class="text-card">Atualizar Paciente</p>
         </div>
 
-        <div class="adicionar-paciente">
+        <div id="adicionar-paciente" class="adicionar-paciente">
             <form action="{% url 'pacientes' %}" method="POST">{% csrf_token %}
                 <div class="row mb">
                     <div class="col-md">
@@ -123,6 +123,62 @@
             </form>
         </div>
     </div>
+</div>
+
+    <div id="att_paciente">
+        <p></p>
+        <select id="paciente-select" onchange="dados_pacientes()" class = "form-control">
+            {% for paciente in pacientes %}
+            <option value = "{{id_paciente}}">{{paciente.nome}}</option> 
+            {% endfor %}  
+        </select>
+        <br>
+        <hr>
+        <div id="form-att-paciente" style="display: none;">
+            <form method="post" action="{% url 'atualiza_paciente' %}">
+                {% csrf_token %}
+        
+                <p>Nome:</p>
+                <input id="nome" name="nome" type="text" class="form-control">
+        
+                <p>Sobrenome:</p>
+                <input id="sobrenome" name="sobrenome" type="text" class="form-control">
+        
+                <p>CPF:</p>
+                <input id="cpf" name="cpf" type="text" class="form-control">
+        
+                <p>Endereço:</p>
+                <input id="endereco" name="endereco" type="text" class="form-control">
+        
+                <p>Bairro:</p>
+                <input id="bairro" name="bairro" type="text" class="form-control">
+        
+                <p>Telefone:</p>
+                <input id="telefone" name="telefone" type="text" class="form-control">
+        
+                <p>Data de Nascimento:</p>
+                <input id="data_nasc" name="data_nasc" type="date" class="form-control">
+        
+                <p>Sexo:</p>
+                <select id="sexo" name="sexo" class="form-control">
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+        
+                <p>Data de Entrada:</p>
+                <input id="data_entrada" name="data_entrada" type="date" class="form-control">
+        
+                <p>Status:</p>
+                <select id="status" name="status" class="form-control">
+                    <option value="ativo">Ativo</option>
+                    <option value="inativo">Inativo</option>
+                </select>
+        
+                <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+            </form>
+        </div>             
+    </div>
+    
 </div>
 
 <script>
