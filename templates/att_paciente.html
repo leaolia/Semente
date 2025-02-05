@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Atualizar Paciente{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'pacientes/css/pacientes.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Atualizar Paciente</h2>
+    <form id="atualizar-paciente-form" method="POST" action="{% url 'att_paciente' %}">
+        {% csrf_token %}
+        <label for="paciente">Selecione um paciente:</label>
+        <select id="paciente" name="id_paciente" class="form-control" onchange="preencherDadosPaciente(this)">
+            <option value="" disabled selected>Selecione um paciente</option>
+            {% for paciente in pacientes %}
+                <option value="{{ paciente.id }}">{{ paciente.nome }} {{ paciente.sobrenome }}</option>
+            {% endfor %}
+        </select>
+
+        <div id="dados-paciente" style="display: none;">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" class="form-control">
+
+            <label for="sobrenome">Sobrenome:</label>
+            <input type="text" id="sobrenome" name="sobrenome" class="form-control">
+
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" name="cpf" class="form-control">
+
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" class="form-control">
+
+            <label for="bairro">Bairro:</label>
+            <input type="text" id="bairro" name="bairro" class="form-control">
+
+            <label for="telefone">Telefone:</label>
+            <input type="text" id="telefone" name="telefone" class="form-control">
+
+            <label for="data_nasc">Data de Nascimento:</label>
+            <input type="date" id="data_nasc" name="data_nasc" class="form-control">
+
+            <label for="sexo">Sexo:</label>
+            <select id="sexo" name="sexo" class="form-control">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+
+            <label for="data_entrada">Data de Entrada:</label>
+            <input type="date" id="data_entrada" name="data_entrada" class="form-control">
+
+            <label for="status">Status:</label>
+            <select id="status" name="status" class="form-control">
+                <option value="Ativo">Ativo</option>
+                <option value="Inativo">Inativo</option>
+                <option value="Manutencao">Manutenção</option>
+                <option value="Alta">Alta</option>
+                <option value="Obito">Óbito</option>
+                <option value="Paleativo">Paleativo</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+        </div>
+    </form>
+</div>
+
+<script>
+function preencherDadosPaciente(select) {
+    const pacienteId = select.value;
+
+    if (pacienteId) {
+        fetch(`/atualizar/`, {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
+            },
+            body: new URLSearchParams({ id_paciente: pacienteId }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                document.getElementById("dados-paciente").style.display = "block";
+                document.getElementById("nome").value = data.nome || "";
+                document.getElementById("sobrenome").value = data.sobrenome || "";
+                document.getElementById("cpf").value = data.cpf || "";
+                document.getElementById("endereco").value = data.endereco || "";
+                document.getElementById("bairro").value = data.bairro || "";
+                document.getElementById("telefone").value = data.telefone || "";
+                document.getElementById("data_nasc").value = data.data_nasc || "";
+                document.getElementById("sexo").value = data.sexo || "";
+                document.getElementById("data_entrada").value = data.data_entrada || "";
+                document.getElementById("status").value = data.status || "";
+            })
+            .catch((error) => console.error("Erro ao carregar dados do paciente:", error));
+    }
+}
+</script>
+{% endblock %}

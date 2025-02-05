@@ -1,115 +1,50 @@
-function registrar_informacao() {
-    const container = document.getElementById("form-informacao");
+// Alternar entre adicionar e atualizar pacientes
+function exibir_form(tipo) {
+    const add_pacientes = document.getElementById('add_pacientes');
+    const att_pacientes = document.getElementById('att_pacientes');
+    const relatorios = document.getElementById('relatorios');
+    const historico = document.getElementById('historico');
 
-    // HTML das opções
-    const html = 
-        <br>
-        <div class="row">
-            <div class="col-md">
-                <label>Cesta de Cereais:</label>
-                <select class="form-control" onchange="toggleQuantidade(this, 'quantidade-cereais') name="cereais" "> 
-                    <option value="nao">Não</option>
-                    <option value="sim">Sim</option>
-                </select>
-                <input type="number" id="quantidade-cereais" class="form-control mt-2" placeholder="Quantidade" style="display:none;">
-            </div>
-            <div class="col-md">
-                <label>Cesta de Frutas:</label>
-                <select class="form-control" onchange="toggleQuantidade(this, 'quantidade-frutas') name="frutas"">
-                    <option value="nao">Não</option>
-                    <option value="sim">Sim</option>
-                </select>
-                <input type="number" id="quantidade-frutas" class="form-control mt-2" placeholder="Quantidade" style="display:none;">
-            </div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-md">
-                <label>Nutren:</label>
-                <select class="form-control" onchange="toggleQuantidade(this, 'quantidade-nutren') name="nutren"">
-                    <option value="nao">Não</option>
-                    <option value="sim">Sim</option>
-                </select>
-                <input type="number" id="quantidade-nutren" class="form-control mt-2" placeholder="Quantidade" style="display:none;">
-            </div>
-            <div class="col-md">
-                <label>Fraldas:</label>
-                <select class="form-control" onchange="toggleQuantidade(this, 'quantidade-fraldas') name="fraldas"">
-                    <option value="nao">Não</option>
-                    <option value="sim">Sim</option>
-                </select>
-                <input type="number" id="quantidade-fraldas" class="form-control mt-2" placeholder="Quantidade" style="display:none;">
-            </div>
-        </div>
-    `;
+    // Esconder todos os formulários
+    if (add_pacientes) add_pacientes.style.display = "none";
+    if (att_pacientes) att_pacientes.style.display = "none";
+    if (relatorios) relatorios.style.display = "none";
+    if (historico) historico.style.display = "none";
 
-    // Inserir o HTML no container
-    container.innerHTML += html;
-}
-
-// Função para exibir ou esconder o campo de quantidade
-function toggleQuantidade(selectElement, inputId) {
-    const input = document.getElementById(inputId);
-    if (selectElement.value === "sim") {
-        input.style.display = "block";
-    } else {
-        input.style.display = "none";
-        input.value = ""; // Limpa o valor da quantidade caso "Não" seja selecionado
+    // Exibir o formulário correto
+    if (tipo === "1") {
+        add_pacientes.style.display = "block";
+    } else if (tipo === "2") {
+        att_pacientes.style.display = "block";
+    } else if (tipo === "3") {
+        relatorios.style.display = "block";
+    } else if (tipo === "4") {
+        historico.style.display = "block";
     }
 }
 
 
-function exibir_form(tipo){
+// Buscar e exibir os dados do paciente selecionado
+function dados_pacientes() {
+    const pacienteSelect = document.getElementById('paciente-select');
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+    const idPaciente = pacienteSelect.value;
 
-    const add_paciente = document.getElementById('adicionar-paciente')
-    const add_paciente = document.getElementById('att_paciente')
+    const data = new FormData();
+    data.append('id_paciente', idPaciente);
 
-    if (tipo == "1"){
-        att_paciente.style.display = "none"
-        add_paciente.style.dispaly = "block"
-    
-} 
-    else if (tipo == "2"){
-        att_paciente.style.display = "block"
-        add_paciente.style.dispaly = "none"
-
-    }
-
-}
-
-function dados_pacientes(){
-    paciente = document.getElementById('paciente-select')
-    csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value     
-    console.log(csrf_token)
-    id_paciente = paciente.value
-
-    data = new FormData()
-    data.append('id_paciente', id_paciente)
-
-    fetch("/pacientes/atualiza_paciente/", {
-        method: "POST",
+    fetch('/atualizar/', {
+        method: 'POST', // Certifique-se de usar POST
         headers: {
-            'X-CSRFToken': csrf_token,
-        }, 
-        body: data
-    }).then(function(result){
-        return result.json()
-    }).then(function(data){
-
-        // Exibir o formulário
-        document.getElementById('form-att-paciente').style.display = 'block';
-    
-        // Preencher os campos
-        document.getElementById('nome').value = data['nome'] || '';
-        document.getElementById('sobrenome').value = data['sobrenome'] || '';
-        document.getElementById('cpf').value = data['cpf'] || '';
-        document.getElementById('endereco').value = data['endereco'] || '';
-        document.getElementById('bairro').value = data['bairro'] || '';
-        document.getElementById('telefone').value = data['telefone'] || '';
-        document.getElementById('data_nasc').value = data['data_nasc'] || '';
-        document.getElementById('sexo').value = data['sexo'] || '';
-        document.getElementById('data_entrada').value = data['data_entrada'] || '';
-        document.getElementById('status').value = data['status'] || '';
-    
+            'X-CSRFToken': csrfToken, // Inclua o CSRF Token
+        },
+        body: data,
     })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            // Manipule os dados recebidos aqui
+        })
+        .catch((error) => console.error('Erro:', error));
 }
+
