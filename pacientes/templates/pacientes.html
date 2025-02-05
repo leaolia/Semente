@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
 {% load static %}
-
 {% block 'head' %}
-    <link rel="stylesheet" href="{% static 'pacientes/css/pacientes.css' %}">
+    <link rel="stylesheet" href="{% static 'templantes/pacientes.css' %}">
 {% endblock %}
 
 {% block 'dashboard' %}
@@ -124,7 +123,7 @@
 
             <!-- Formulário para atualizar paciente -->
             <div id="form-att-paciente" style="display: none;">
-                <form method="post" action="{% url 'atualiza_paciente' %}">
+                <form method="post" action="{% url 'att_paciente' %}">
                     {% csrf_token %}
                     <p>Nome:</p>
                     <input id="nome" name="nome" type="text" class="form-control">
@@ -182,7 +181,7 @@
         const data = new FormData();
         data.append('id_paciente', id_paciente);
 
-        fetch("/pacientes/atualiza_paciente/", {
+        fetch("/pacientes/att_paciente/", {
             method: "POST",
             headers: {
                 'X-CSRFToken': csrf_token,

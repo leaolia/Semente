@@ -3,14 +3,12 @@ function exibir_form(tipo) {
     const add_pacientes = document.getElementById('add_pacientes');
     const att_pacientes = document.getElementById('att_pacientes');
     const relatorios = document.getElementById('relatorios');
-    const historico = document.getElementById('historico');
-
+   
     // Esconder todos os formulários
     if (add_pacientes) add_pacientes.style.display = "none";
     if (att_pacientes) att_pacientes.style.display = "none";
     if (relatorios) relatorios.style.display = "none";
-    if (historico) historico.style.display = "none";
-
+   
     // Exibir o formulário correto
     if (tipo === "1") {
         add_pacientes.style.display = "block";
@@ -18,8 +16,6 @@ function exibir_form(tipo) {
         att_pacientes.style.display = "block";
     } else if (tipo === "3") {
         relatorios.style.display = "block";
-    } else if (tipo === "4") {
-        historico.style.display = "block";
     }
 }
 

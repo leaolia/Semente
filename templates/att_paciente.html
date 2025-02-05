@@ -1,16 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block title %}Atualizar Paciente{% endblock %}
-
-{% block head %}
-<link rel="stylesheet" href="{% static 'pacientes/css/pacientes.css' %}">
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'templantes/pacientes.css' %}">
 {% endblock %}
+{% block title %}Atualizar Paciente{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h2>Atualizar Paciente</h2>
-    <form id="atualizar-paciente-form" method="POST" action="{% url 'att_paciente' %}">
+    <h3>Atualizar Paciente</h3>
+    <form method="POST" action="{% url 'att_paciente' %}">
         {% csrf_token %}
         <label for="paciente">Selecione um paciente:</label>
         <select id="paciente" name="id_paciente" class="form-control" onchange="preencherDadosPaciente(this)">
@@ -21,6 +19,7 @@
         </select>
 
         <div id="dados-paciente" style="display: none;">
+            <!-- Campos do Paciente -->
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" class="form-control">
 
@@ -61,6 +60,50 @@
                 <option value="Paleativo">Paleativo</option>
             </select>
 
+            <!-- Campos da Cesta -->
+            <h4>Detalhes da Cesta</h4>
+            <label for="tipo_cesta">Tipo de Cesta:</label>
+            <select id="tipo_cesta" name="tipo_cesta" class="form-control">
+                <option value="">Não Recebe</option>
+                <option value="basica">Básica</option>
+                <option value="frutas">Frutas</option>
+                <option value="legumes">Legumes</option>
+                <option value="cereais">Cereais</option>
+            </select>
+
+            <label for="opcao_cesta">Opção de Cesta:</label>
+            <select id="opcao_cesta" name="opcao_cesta" class="form-control">
+                <option value="">N/A</option>
+                <option value="cesta_alternada">Cesta Alternada</option>
+                <option value="mensal">Mensal</option>
+                <option value="tempo_indeterminado">Tempo Indeterminado</option>
+                <option value="suspensa">Suspensa</option>
+            </select>
+
+            <label for="cereais">Recebe Cereais?</label>
+            <input type="checkbox" id="cereais" name="cereais">
+
+            <label for="quantidade_cereais">Quantidade de Cereais:</label>
+            <input type="number" id="quantidade_cereais" name="quantidade_cereais" class="form-control" min="0">
+
+            <label for="frutas">Recebe Frutas?</label>
+            <input type="checkbox" id="frutas" name="frutas">
+
+            <label for="quantidade_frutas">Quantidade de Frutas:</label>
+            <input type="number" id="quantidade_frutas" name="quantidade_frutas" class="form-control" min="0">
+
+            <label for="nutren">Recebe Nutren?</label>
+            <input type="checkbox" id="nutren" name="nutren">
+
+            <label for="quantidade_nutren">Quantidade de Nutren:</label>
+            <input type="number" id="quantidade_nutren" name="quantidade_nutren" class="form-control" min="0">
+
+            <label for="fraldas">Recebe Fraldas?</label>
+            <input type="checkbox" id="fraldas" name="fraldas">
+
+            <label for="quantidade_fraldas">Quantidade de Fraldas:</label>
+            <input type="number" id="quantidade_fraldas" name="quantidade_fraldas" class="form-control" min="0">
+
             <button type="submit" class="btn btn-primary mt-3">Salvar</button>
         </div>
     </form>
@@ -81,6 +124,8 @@ function preencherDadosPaciente(select) {
             .then((response) => response.json())
             .then((data) => {
                 document.getElementById("dados-paciente").style.display = "block";
+
+                // Preencher dados do paciente
                 document.getElementById("nome").value = data.nome || "";
                 document.getElementById("sobrenome").value = data.sobrenome || "";
                 document.getElementById("cpf").value = data.cpf || "";
@@ -91,6 +136,18 @@ function preencherDadosPaciente(select) {
                 document.getElementById("sexo").value = data.sexo || "";
                 document.getElementById("data_entrada").value = data.data_entrada || "";
                 document.getElementById("status").value = data.status || "";
+
+                // Preencher dados da cesta
+                document.getElementById("tipo_cesta").value = data.tipo_cesta || "";
+                document.getElementById("opcao_cesta").value = data.opcao_cesta || "";
+                document.getElementById("cereais").checked = data.cereais || false;
+                document.getElementById("quantidade_cereais").value = data.quantidade_cereais || 0;
+                document.getElementById("frutas").checked = data.frutas || false;
+                document.getElementById("quantidade_frutas").value = data.quantidade_frutas || 0;
+                document.getElementById("nutren").checked = data.nutren || false;
+                document.getElementById("quantidade_nutren").value = data.quantidade_nutren || 0;
+                document.getElementById("fraldas").checked = data.fraldas || false;
+                document.getElementById("quantidade_fraldas").value = data.quantidade_fraldas || 0;
             })
             .catch((error) => console.error("Erro ao carregar dados do paciente:", error));
     }

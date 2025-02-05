@@ -1,26 +1,68 @@
 {% load static %}
 <!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  {% block head %}{% endblock %}
-  <link rel="stylesheet" href="{% static 'pacientes/css/pacientes.css' %}">
-  <title>{% block title %}Semente Esperança{% endblock %}</title>
-</head>
-<body>
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'general/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'general/css/general.css' %}">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    {% block 'head' %}{% endblock %}
+
+    <title>{% block 'title' %}{% endblock %}</title>
+  </head>
+  <body>
+    
     <div class="sidebar">
-        <ul>
-            <li><a href="{% url 'pacientes' %}">Lista de Pacientes</a></li>
-            <li><a href="{% url 'adicionar_paciente' %}">Adicionar Paciente</a></li>
-            <li><a href="{% url 'att_paciente' %}">Atualizar Paciente</a></li>
-            <li><a href="{% url 'relatorios' %}">Relatórios</a></li>
-            <li><a href="{% url 'historico' %}">Histórico</a></li>
+        <div class="logo-details">
+            <div class="logo_name">Semente Esperança</div>
+            <i class='bx bx-menu' id="btn" ></i>
+        </div>
+        <ul class="nav-list">
+          <li>
+            <a href="{% url 'pacientes' %}">
+              <i class='bx bx-grid-alt'></i>
+              <span class="links_name">Página inicial</span>
+            </a>
+            <span class="tooltip">Página inicial</span>
+          </li>
+        <li>
+            <a href="{% url 'adicionar_paciente' %}">
+            <i class='bx bx-chat' ></i>
+            <span class="links_name">Adicionar Paciente</span>
+          </a>
+          <span class="tooltip">Adicionar Paciente</span>
+        </li>
+        <li>
+         <a href="{% url 'att_paciente' %}">
+            <i class='bx bx-folder' ></i>
+            <span class="links_name">Atualizar Paciente</span>
+          </a>
+          <span class="tooltip">Atualizar Paciente</span>
+        </li>
+        <li>
+          <a href="{% url 'relatorios' %}">
+            <i class='bx bx-cog' ></i>
+            <span class="links_name">Relatório</span>
+          </a>
+          <span class="tooltip">Relatório</span>
+        </li>
         </ul>
-    </div>
-    <div class="content">
-        {% block content %}{% endblock %}
-    </div>
-    {% block body %}{% endblock %}
-</body>
+      </div>
+      
+      <section class="home-section">
+          {% block 'dashboard'%}
+          {% endblock %}
+
+      </section>
+
+    {% block 'body' %}
+    {% endblock %}
+    <script src="{% static 'general/js/base.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 </html>
