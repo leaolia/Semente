@@ -54,3 +54,30 @@ h3 {
     margin-top: 20px;
     color: var(--dark-color);
 }
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgb(255, 253, 253);
+}
+
+h2, h3 {
+    color:rgb(255, 255, 255);
+}
+
+.btn-group .btn {
+    margin-right: 5px;
+}
+
+.list-group-item {
+    font-size: 16px;
+}
+
+.accordion .card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #ddd;
+}
+
+.accordion .btn-link {
+    text-decoration: none;
+    font-weight: bold;
+    color: #006400;;
+}

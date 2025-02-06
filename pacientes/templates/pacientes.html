@@ -7,200 +7,58 @@
 
 {% block 'dashboard' %}
 <div class="container">
-    <div class="row mb">
-        <!-- Botões de ação -->
-        <div onclick="exibir_form('1')" class="col-md-5 card-dashboard">
-            <p class="text-card">Adicionar Paciente</p>
-        </div>
-
-        <div onclick="exibir_form('2')" class="col-md-5 card-dashboard">
-            <p class="text-card">Atualizar Paciente</p>
-        </div>
-
-        <!-- Formulário para adicionar paciente -->
-        <div id="adicionar-paciente" class="adicionar-paciente" style="display: none;">
-            <form action="{% url 'pacientes' %}" method="POST">{% csrf_token %}
-                <div class="row mb">
-                    <div class="col-md">
-                        <p>Nome:</p>
-                        <input type="text" class="form-control" placeholder="Primeiro nome" name="nome" required>
-                    </div>
-                    <div class="col-md">
-                        <p>Sobrenome:</p>
-                        <input type="text" class="form-control" placeholder="Sobrenome" name="sobrenome" required>
-                    </div>
-                </div>
-                <br>
-                <p>CPF:</p>
-                <input type="text" class="form-control" placeholder="___.___.___-__" name="cpf" required>
-                <br>
-                <p>Endereço:</p>
-                <input type="text" class="form-control" placeholder="Endereço" name="endereco" required>
-                <div class="row">
-                    <div class="col-md">
-                        <p>Bairro:</p>
-                        <input type="text" class="form-control" placeholder="Bairro" name="bairro" required>
-                    </div>
-                    <div class="col-md">
-                        <p>Telefone:</p>
-                        <input type="text" class="form-control" placeholder="Telefone" name="telefone" required>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md">
-                        <p>Data de Nascimento:</p>
-                        <input type="date" class="form-control" name="data_nasc" required>
-                    </div>
-                    <div class="col-md">
-                        <p>Sexo:</p>
-                        <select class="form-control" name="sexo" required>
-                            <option value="M">Masculino</option>
-                            <option value="F">Feminino</option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <div class="row">
-                    <div class="col-md">
-                        <p>Data de Entrada:</p>
-                        <input type="date" class="form-control" name="data_entrada" required>
-                    </div>
-                    <div class="col-md">
-                        <p>Status:</p>
-                        <select class="form-control" name="status" required>
-                            <option value="Ativo">Ativo</option>
-                            <option value="Inativo">Inativo</option>
-                            <option value="Manutencao">Manutenção</option>
-                            <option value="Alta">Alta</option>
-                            <option value="Obito">Óbito</option>
-                            <option value="Paleativo">Paleativo</option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <!-- Campo Tipo de Cesta -->
-                <div class="row">
-                    <div class="col-md">
-                        <p>Tipo de Cesta:</p>
-                        <select name="tipo_cesta" class="form-control" required>
-                            <option value="">Selecione...</option>
-                            <option value="basica">Básica</option>
-                            <option value="frutas">Frutas</option>
-                            <option value="legumes">Legumes</option>
-                            <option value="cereais">Cereais</option>
-                        </select>
-                    </div>
-                </div>
-                <br>
-                <!-- Campo Tipo de Câncer e Observação -->
-                <div class="row mb">
-                    <div class="col-md">
-                        <p>Tipo de Câncer:</p>
-                        <input type="text" class="form-control" placeholder="Digite o tipo de câncer" name="tipo_cancer" required>
-                    </div>
-                    <div class="col-md">
-                        <p>Observação:</p>
-                        <textarea class="form-control" placeholder="Digite uma observação" name="observacao" rows="3"></textarea>
-                    </div>
-                </div>
-                <br>
-                <input type="submit" value="Cadastrar" class="btn-principal">
-            </form>
-        </div>
-        
-
-        <!-- Seletor para atualizar paciente -->
-        <div id="att_paciente" style="display: none;">
-            <p>Selecione um paciente:</p>
-            <select id="paciente-select" onchange="dados_pacientes()" class="form-control">
-                <option value="">Selecione um paciente</option>
-                {% for paciente in pacientes %}
-                    <option value="{{ paciente.id }}">{{ paciente.nome }} {{ paciente.sobrenome }}</option>
-                {% endfor %}
-            </select>
-            <br>
-
-            <!-- Formulário para atualizar paciente -->
-            <div id="form-att-paciente" style="display: none;">
-                <form method="post" action="{% url 'att_paciente' %}">
-                    {% csrf_token %}
-                    <p>Nome:</p>
-                    <input id="nome" name="nome" type="text" class="form-control">
-                    <p>Sobrenome:</p>
-                    <input id="sobrenome" name="sobrenome" type="text" class="form-control">
-                    <p>CPF:</p>
-                    <input id="cpf" name="cpf" type="text" class="form-control">
-                    <p>Endereço:</p>
-                    <input id="endereco" name="endereco" type="text" class="form-control">
-                    <p>Bairro:</p>
-                    <input id="bairro" name="bairro" type="text" class="form-control">
-                    <p>Telefone:</p>
-                    <input id="telefone" name="telefone" type="text" class="form-control">
-                    <p>Data de Nascimento:</p>
-                    <input id="data_nasc" name="data_nasc" type="date" class="form-control">
-                    <p>Sexo:</p>
-                    <select id="sexo" name="sexo" class="form-control">
-                        <option value="M">Masculino</option>
-                        <option value="F">Feminino</option>
-                    </select>
-                    <button type="submit" class="btn btn-primary mt-3">Salvar</button>
-                </form>
-            </div>
-        </div>
-    </div>
+    <h2 class="text-center mt-4 mb-4">Lista de Pacientes</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Sobrenome</th>
+                <th>CPF</th>
+                <th>Endereço</th>
+                <th>Bairro</th>
+                <th>Telefone</th>
+                <th>Data de Nascimento</th>
+                <th>Sexo</th>
+                <th>Data de Entrada</th>
+                <th>Status</th>
+                <th>Tipo de Câncer</th>
+                <th>Observação</th>
+                <th>Tipo de Cesta</th>
+                <th>Opção de Cesta</th>
+                <th>Cereais</th>
+                <th>Frutas</th>
+                <th>Nutren</th>
+                <th>Fraldas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for paciente in pacientes %}
+            <tr>
+                <td>{{ paciente.nome }}</td>
+                <td>{{ paciente.sobrenome }}</td>
+                <td>{{ paciente.cpf }}</td>
+                <td>{{ paciente.endereco }}</td>
+                <td>{{ paciente.bairro }}</td>
+                <td>{{ paciente.telefone }}</td>
+                <td>{{ paciente.data_nasc }}</td>
+                <td>{{ paciente.sexo }}</td>
+                <td>{{ paciente.data_entrada }}</td>
+                <td>{{ paciente.status }}</td>
+                <td>{{ paciente.tipo_cancer }}</td>
+                <td>{{ paciente.observacao }}</td>
+                <td>{{ paciente.tipo_cesta }}</td>
+                <td>{{ paciente.opcao_cesta }}</td>
+                <td>{% if paciente.cereais %}Sim{% else %}Não{% endif %}</td>
+                <td>{% if paciente.frutas %}Sim{% else %}Não{% endif %}</td>
+                <td>{% if paciente.nutren %}Sim{% else %}Não{% endif %}</td>
+                <td>{% if paciente.fraldas %}Sim{% else %}Não{% endif %}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="18" class="text-center">Nenhum paciente cadastrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
-
-<script>
-    // Função para alternar entre os formulários
-    function exibir_form(tipo) {
-        const add_paciente = document.getElementById('adicionar-paciente');
-        const att_paciente = document.getElementById('att_paciente');
-
-        if (tipo === "1") {
-            att_paciente.style.display = "none"; // Oculta "Atualizar Paciente"
-            add_paciente.style.display = "block"; // Exibe "Adicionar Paciente"
-        } else if (tipo === "2") {
-            add_paciente.style.display = "none"; // Oculta "Adicionar Paciente"
-            att_paciente.style.display = "block"; // Exibe "Atualizar Paciente"
-        }
-    }
-
-    // Função para buscar e exibir dados do paciente
-    function dados_pacientes() {
-        const paciente = document.getElementById('paciente-select');
-        const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
-
-        const id_paciente = paciente.value;
-
-        if (!id_paciente) {
-            alert('Selecione um paciente!');
-            return;
-        }
-
-        const data = new FormData();
-        data.append('id_paciente', id_paciente);
-
-        fetch("/pacientes/att_paciente/", {
-            method: "POST",
-            headers: {
-                'X-CSRFToken': csrf_token,
-            },
-            body: data,
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                document.getElementById('form-att-paciente').style.display = 'block';
-                document.getElementById('nome').value = data['nome'] || '';
-                document.getElementById('sobrenome').value = data['sobrenome'] || '';
-                document.getElementById('cpf').value = data['cpf'] || '';
-                document.getElementById('endereco').value = data['endereco'] || '';
-                document.getElementById('bairro').value = data['bairro'] || '';
-                document.getElementById('telefone').value = data['telefone'] || '';
-            })
-            .catch((error) => {
-                console.error('Erro ao buscar os dados do paciente:', error);
-            });
-    }
-</script>
 {% endblock %}

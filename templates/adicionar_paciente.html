@@ -1,8 +1,11 @@
-{% extends "base.html" %}
-{% load static %}
-{% block 'head' %}
-    <link rel="stylesheet" href="{% static 'templantes/pacientes.css' %}">
-{% endblock %}
+
+<div class="sidebar">
+    <ul>
+        <li><a href="/relatorios/">Relatórios</a></li>
+        <li><a href="/pacientes/">Pacientes</a></li>
+    </ul>
+</div>
+
 {% block title %}Adicionar Paciente{% endblock %}
 
 {% block content %}
