@@ -268,11 +268,11 @@ table th {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background-color: rgba(255, 255, 255, 0.05); /* Linhas ímpares com fundo levemente mais claro */
+  background-color: rgb(255, 255, 255); /* Linhas ímpares com fundo levemente mais claro */
 }
 
 .table-striped tbody tr:nth-of-type(even) {
-  background-color: rgba(0, 0, 0, 0.1); /* Linhas pares com fundo mais escuro */
+  background-color: rgba(255, 255, 255, 0.1); /* Linhas pares com fundo mais escuro */
 }
 
 h2, h3 {
