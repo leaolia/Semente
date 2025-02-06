@@ -11,7 +11,7 @@
   top: 0;
   height: 100%;
   width: 78px;
-  background: var(--dark-color);
+  background: var(--main-color);
   padding: 6px 14px;
   z-index: 99;
   transition: all 0.5s ease;
@@ -167,7 +167,6 @@
   height: 50px;
   line-height: 50px;
   font-size: 18px;
-  border-radius: 12px;
 }
 .sidebar li.profile{
   position: fixed;
@@ -225,7 +224,7 @@
   position: relative;
   min-height: 100vh;
   top: 0;
-  background:rgb(255, 250, 250);
+  background: white; /* Changed to white */
   left: 78px;
   color: white;
   width: calc(100% - 78px);
@@ -247,4 +246,35 @@
   .sidebar li .tooltip{
     display: none;
   }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  color: white; /* Define a cor do texto como branco */
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  color: white; /* Garante que o texto das células seja branco */
+}
+
+table th {
+  background-color: var(--main-color);
+  color: white; /* Define o texto do cabeçalho como branco */
+  text-align: left;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(255, 255, 255, 0.05); /* Linhas ímpares com fundo levemente mais claro */
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+  background-color: rgba(0, 0, 0, 0.1); /* Linhas pares com fundo mais escuro */
+}
+
+h2, h3 {
+  color: white; /* Garante que os títulos também sejam brancos */
 }

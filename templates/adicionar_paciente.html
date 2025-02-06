@@ -6,6 +6,10 @@
     </ul>
 </div>
 
+{% load static %}
+{% block 'head' %}
+    <link rel="stylesheet" href="{% static 'templantes/pacientes.css' %}">
+{% endblock %}
 {% block title %}Adicionar Paciente{% endblock %}
 
 {% block content %}
