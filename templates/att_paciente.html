@@ -1,4 +1,10 @@
 
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'general/css/adicionar_paciente.css' %}">
+{% endblock %}
+
 <div class="sidebar">
     <ul>
         <li><a href="/relatorios/">Relatórios</a></li>
@@ -7,7 +13,7 @@
 </div>
 
 {% block content %}
-<div class="container">
+<div class="form-group">
     <h3>Atualizar Paciente</h3>
     <form method="POST" action="{% url 'att_paciente' %}">
         {% csrf_token %}

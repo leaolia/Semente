@@ -78,7 +78,7 @@
   left: calc(100% + 15px);
   z-index: 3;
   background: #fff;
-  box-shadow: 0 5px 10px rgb(255, 255, 255);
+  box-shadow: 0 5px 10px rgb(255, 254, 254);
   padding: 6px 12px;
   border-radius: 4px;
   font-size: 15px;
@@ -220,16 +220,19 @@
   width: 50px;
   background: none;
 }
-.home-section{
+.home-section {
   position: relative;
   min-height: 100vh;
   top: 0;
-  background: white; /* Changed to white */
+  background: white;
   left: 78px;
-  color: white;
   width: calc(100% - 78px);
   transition: all 0.5s ease;
   z-index: 2;
+  padding: 0; /* Certifique-se de que padding não esteja causando o espaço */
+  margin: 0;  /* Certifique-se de que margin não esteja causando o espaço */
+}
+
 }
 .sidebar.open ~ .home-section{
   left: 250px;
@@ -240,8 +243,11 @@
   color: var(--main-color);
   font-size: 25px;
   font-weight: 500;
-  margin: 18px
+  margin: 18px;
+  padding: 0; /* Certifique-se de que padding não esteja causando o espaço */
+  margin: 0;
 }
+
 @media (max-width: 420px) {
   .sidebar li .tooltip{
     display: none;
@@ -256,9 +262,9 @@ table {
 }
 
 table th, table td {
-  border: 1px solid #ddd;
+  border: 1px solid #fff;
   padding: 8px;
-  color: white; /* Garante que o texto das células seja branco */
+  color: black; /* Garante que o texto das células seja branco */
 }
 
 table th {
@@ -276,5 +282,74 @@ table th {
 }
 
 h2, h3 {
-  color: white; /* Garante que os títulos também sejam brancos */
+  color: black; /* Garante que os títulos também sejam brancos */
+}
+
+form {
+  max-width: 600px;
+  margin: 0 auto; /* Centraliza o formulário */
+  padding: 20px;
+  background: #f9f9f9; /* Fundo claro para contraste */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form .form-group {
+  margin-bottom: 15px;
+}
+
+form label {
+  display: block;
+  font-weight: 500;
+  color: #333; /* Cor escura para texto */
+  margin-bottom: 5px;
+}
+
+form input, form select, form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+form input:focus, form select:focus, form textarea:focus {
+  outline: none;
+  border-color: var(--main-color); /* Destaque na borda ao focar */
+  box-shadow: 0 0 5px rgba(0, 128, 255, 0.5);
+}
+
+form button {
+  display: block;
+  width: 100%;
+  background: var(--main-color);
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background: #045fb4; /* Cor mais escura ao passar o mouse */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.text-center-custom {
+  text-align: center;
+  margin-bottom: 20px; /* Opcional para adicionar espaço abaixo */
+}
+
+.sidebar i.voltar-icon {
+  color: #fff; /* Cor personalizada */
+}
+.sidebar li a:hover i.voltar-icon {
+  color: var(--main-color); /* Cor ao passar o mouse */
 }

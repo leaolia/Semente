@@ -1,146 +1,170 @@
-<div class="sidebar">
-    <ul>
-        <li><a href="/relatorios/">Relatórios</a></li>
-        <li><a href="/pacientes/">Pacientes</a></li>
-    </ul>
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'general/css/relatorios.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Relatório de Pacientes</h2>
+
+    <div class="total-pacientes">
+        <h3>Total de Pacientes:</h3>
+        <p class="badge badge-primary">{{ total_pacientes }}</p>
+    </div>
+
+    <div class="status-pacientes mt-4">
+        <h3>Pacientes por Status:</h3>
+        <ul class="list-group">
+            {% for status in status_counts %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                {{ status.status }}
+                <span class="badge badge-info">{{ status.total }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="filter-pacientes mt-4">
+        <h3>Filtrar Pacientes por Status:</h3>
+        <div class="btn-group" role="group" aria-label="Filtrar Status">
+            <button class="btn btn-success" onclick="toggleLista('ativos-lista')">
+                Ativos ({{ pacientes_ativos|length }})
+            </button>
+            <button class="btn btn-danger" onclick="toggleLista('inativos-lista')">
+                Inativos ({{ pacientes_inativos|length }})
+            </button>
+            <button class="btn btn-warning" onclick="toggleLista('manutencao-lista')">
+                Manutenção ({{ pacientes_manutencao|length }})
+            </button>
+            <button class="btn btn-secondary" onclick="toggleLista('alta-lista')">
+                Alta ({{ pacientes_alta|length }})
+            </button>
+            <button class="btn btn-dark" onclick="toggleLista('obito-lista')">
+                Óbito ({{ pacientes_obito|length }})
+            </button>
+            <button class="btn btn-info" onclick="toggleLista('paleativo-lista')">
+                Paliativo ({{ pacientes_paleativo|length }})
+            </button>
+        </div>
+    </div>
+
+    <div id="ativos-lista" class="pacientes-lista mt-3" style="display: none;">
+        <h4>Pacientes Ativos:</h4>
+        <ul class="list-group">
+            {% for paciente in pacientes_ativos %}
+            <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+            {% empty %}
+            <li class="list-group-item">Nenhum paciente ativo.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="inativos-lista" class="pacientes-lista mt-3" style="display: none;">
+        <h4>Pacientes Inativos:</h4>
+        <ul class="list-group">
+            {% for paciente in pacientes_inativos %}
+            <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+            {% empty %}
+            <li class="list-group-item">Nenhum paciente inativo.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="manutencao-lista" class="pacientes-lista mt-3" style="display: none;">
+        <h4>Pacientes em Manutenção:</h4>
+        <ul class="list-group">
+            {% for paciente in pacientes_manutencao %}
+            <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+            {% empty %}
+            <li class="list-group-item">Nenhum paciente em manutenção.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="alta-lista" class="pacientes-lista mt-3" style="display: none;">
+        <h4>Pacientes com Alta:</h4>
+        <ul class="list-group">
+            {% for paciente in pacientes_alta %}
+            <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+            {% empty %}
+            <li class="list-group-item">Nenhum paciente com alta.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="obito-lista" class="pacientes-lista mt-3" style="display: none;">
+        <h4>Pacientes em Óbito:</h4>
+        <ul class="list-group">
+            {% for paciente in pacientes_obito %}
+            <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+            {% empty %}
+            <li class="list-group-item">Nenhum paciente em óbito.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="paleativo-lista" class="pacientes-lista mt-3" style="display: none;">
+        <h4>Pacientes Paliativos:</h4>
+        <ul class="list-group">
+            {% for paciente in pacientes_paleativo %}
+            <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+            {% empty %}
+            <li class="list-group-item">Nenhum paciente paliativo.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="pacientes-cestas mt-4">
+        <h3>Pacientes que Recebem Cestas:</h3>
+        <div>
+            <h4>Cereais ({{ pacientes_cereais|length }})</h4>
+            <ul class="list-group">
+                {% for paciente in pacientes_cereais %}
+                <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+                {% empty %}
+                <li class="list-group-item">Nenhum paciente recebe cereais.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h4>Frutas ({{ pacientes_frutas|length }})</h4>
+            <ul class="list-group">
+                {% for paciente in pacientes_frutas %}
+                <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+                {% empty %}
+                <li class="list-group-item">Nenhum paciente recebe frutas.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h4>Nutren ({{ pacientes_nutren|length }})</h4>
+            <ul class="list-group">
+                {% for paciente in pacientes_nutren %}
+                <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+                {% empty %}
+                <li class="list-group-item">Nenhum paciente recebe Nutren.</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div>
+            <h4>Fraldas ({{ pacientes_fraldas|length }})</h4>
+            <ul class="list-group">
+                {% for paciente in pacientes_fraldas %}
+                <li class="list-group-item">{{ paciente.nome }} {{ paciente.sobrenome }}</li>
+                {% empty %}
+                <li class="list-group-item">Nenhum paciente recebe fraldas.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
-
-<h2>Relatório de Pacientes</h2>
-
-<h3>Total de Pacientes: {{ total_pacientes }}</h3>
-
-<h3>Pacientes por Status</h3>
-<ul>
-    {% for status in status_counts %}
-        <li>{{ status.status }}: {{ status.total }}</li>
-    {% endfor %}
-</ul>
-
-<!-- Botões para exibir Ativos e Inativos -->
-<h3>Filtrar Pacientes por Status</h3>
-
-<div class="botoes-status">
-    <button class="btn-status" onclick="toggleLista('ativos-lista')">Ativos ({{ pacientes_ativos|length }})</button>
-    <button class="btn-status" onclick="toggleLista('inativos-lista')">Inativos ({{ pacientes_inativos|length }})</button>
-    <!-- Adicione outros botões de status -->
-</div>
-
-<ul id="ativos-lista" class="lista-pacientes" style="display: none;">
-    {% for paciente in pacientes_ativos %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente ativo.</li>
-    {% endfor %}
-</ul>
-
-<ul id="inativos-lista" class="lista-pacientes" style="display: none;">
-    {% for paciente in pacientes_inativos %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente inativo.</li>
-    {% endfor %}
-</ul>
-</div>
-
-<button onclick="toggleLista('manutencao-lista')">Ver Pacientes em Manutenção ({{ pacientes_manutencao|length }})</button>
-<ul id="manutencao-lista" style="display: none;">
-    {% for paciente in pacientes_manutencao %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente em manutenção.</li>
-    {% endfor %}
-</ul>
-
-<button onclick="toggleLista('alta-lista')">Ver Pacientes com Alta ({{ pacientes_alta|length }})</button>
-<ul id="alta-lista" style="display: none;">
-    {% for paciente in pacientes_alta %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente com alta.</li>
-    {% endfor %}
-</ul>
-
-<button onclick="toggleLista('obito-lista')">Ver Pacientes Óbito ({{ pacientes_obito|length }})</button>
-<ul id="obito-lista" style="display: none;">
-    {% for paciente in pacientes_obito %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente óbito.</li>
-    {% endfor %}
-</ul>
-
-<button onclick="toggleLista('paleativo-lista')">Ver Pacientes Paliativos ({{ pacientes_paleativo|length }})</button>
-<ul id="paleativo-lista" style="display: none;">
-    {% for paciente in pacientes_paleativo %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente paliativo.</li>
-    {% endfor %}
-</ul>
-
-
-<button onclick="toggleLista('inativos-lista')">Ver Pacientes Inativos ({{ pacientes_inativos|length }})</button>
-<ul id="inativos-lista" style="display: none;">
-    {% for paciente in pacientes_inativos %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente inativo.</li>
-    {% endfor %}
-</ul>
-
-<h3>Pacientes que Recebem Cestas</h3>
-
-<h4>Cereais ({{ pacientes_cereais|length }} pacientes)
-    <button onclick="toggleLista('cereais-lista')">Ver Pacientes</button>
-</h4>
-<ul id="cereais-lista" style="display: none;">
-    {% for paciente in pacientes_cereais %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente recebe esta cesta.</li>
-    {% endfor %}
-</ul>
-
-<h4>Frutas ({{ pacientes_frutas|length }} pacientes)
-    <button onclick="toggleLista('frutas-lista')">Ver Pacientes</button>
-</h4>
-<ul id="frutas-lista" style="display: none;">
-    {% for paciente in pacientes_frutas %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente recebe esta cesta.</li>
-    {% endfor %}
-</ul>
-
-<h4>Nutren ({{ pacientes_nutren|length }} pacientes)
-    <button onclick="toggleLista('nutren-lista')">Ver Pacientes</button>
-</h4>
-<ul id="nutren-lista" style="display: none;">
-    {% for paciente in pacientes_nutren %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente recebe esta cesta.</li>
-    {% endfor %}
-</ul>
-
-<h4>Fraldas ({{ pacientes_fraldas|length }} pacientes)
-    <button onclick="toggleLista('fraldas-lista')">Ver Pacientes</button>
-</h4>
-<ul id="fraldas-lista" style="display: none;">
-    {% for paciente in pacientes_fraldas %}
-        <li>{{ paciente.nome }} {{ paciente.sobrenome }}</li>
-    {% empty %}
-        <li>Nenhum paciente recebe esta cesta.</li>
-    {% endfor %}
-</ul>
 
 <script>
 function toggleLista(id) {
-    var lista = document.getElementById(id);
-    if (lista.style.display === "none") {
-        lista.style.display = "block";
-    } else {
-        lista.style.display = "none";
-    }
+    const lista = document.getElementById(id);
+    lista.style.display = lista.style.display === "none" ? "block" : "none";
 }
 </script>
+{% endblock %}
